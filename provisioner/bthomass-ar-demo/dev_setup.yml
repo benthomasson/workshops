@@ -1,0 +1,36 @@
+---
+- hosts: all
+  gather_facts: false
+  become: true
+  tasks:
+  - dnf:
+      name: "{{item}}"
+      state: present
+    with_items:
+      - git
+      - vim
+      - python3.8
+      - go
+      - rust
+      - python38-devel
+    when: true
+  - pip:
+      name: "{{item}}"
+      virtualenv: /home/ec2-user/venv
+      virtualenv_command: /usr/bin/python3.8 -m venv
+      state: forcereinstall
+    with_items:
+      - setuptools_rust
+      - pip
+    when: false
+  - pip:
+      name: "{{item}}"
+      virtualenv: /home/ec2-user/venv
+      virtualenv_command: /usr/bin/python3.8 -m venv
+    with_items:
+      - ansible
+    when: false
+  - shell:
+      cmd: chown -R ec2-user.ec2-user /home/ec2-user/venv
+    when: false
+...

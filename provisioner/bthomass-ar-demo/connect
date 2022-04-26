@@ -1,0 +1,2 @@
+#!/bin/bash -ex
+ssh -i bthomass-ar-demo-key.pem ec2-user@${1}
