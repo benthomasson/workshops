@@ -6,6 +6,13 @@
   - dnf:
       name: "{{item}}"
       state: present
+      disable_gpg_check: true
+    with_items:
+      - https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    when: false
+  - dnf:
+      name: "{{item}}"
+      state: present
     with_items:
       - git
       - vim
@@ -13,6 +20,9 @@
       - go
       - rust
       - python38-devel
+      - screen
+      - net-tools
+      - mosh
     when: true
   - pip:
       name: "{{item}}"
@@ -33,4 +43,10 @@
   - shell:
       cmd: chown -R ec2-user.ec2-user /home/ec2-user/venv
     when: false
+  - lineinfile:
+      path: /etc/hosts
+      line: "{{item}}"
+    with_items:
+      - 'webserver 44.201.5.56'
+    when: true 
 ...

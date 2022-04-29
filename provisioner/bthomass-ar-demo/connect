@@ -1,2 +1,3 @@
 #!/bin/bash -ex
-ssh -i bthomass-ar-demo-key.pem ec2-user@${1}
+#ssh -i bthomass-ar-demo-key.pem ec2-user@${1}
+mosh --ssh="ssh -i bthomass-ar-demo-key.pem" ec2-user@${1}
